@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DISC Behavioral Styles Profile</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d1d5db;
+      --accent: #111827;
+      --soft: #eef2f7;
+      --danger: #b91c1c;
+      --d-color: #dc2626;
+      --i-color: #eab308;
+      --s-color: #16a34a;
+      --c-color: #2563eb;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 24px rgba(17, 24, 39, 0.06);
+    }
+    h1, h2, h3 { margin-top: 0; }
+    h1 { font-size: 2rem; margin-bottom: 8px; }
+    h2 { font-size: 1.35rem; margin-bottom: 12px; }
+    h3 { font-size: 1.05rem; margin-bottom: 10px; }
+    p { margin: 0 0 12px; }
+    .muted { color: var(--muted); }
+    .instructions ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .setting-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    label { font-weight: 700; display: block; margin-bottom: 6px; }
+    input[type="text"], select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 1rem;
+      background: #fff;
+    }
+    .question {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 16px;
+      background: #fff;
+    }
+    .question-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .question-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .question-status {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border-top: 1px solid var(--border);
+      padding: 10px 8px;
+      vertical-align: top;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+    th {
+      background: var(--soft);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .option-text { font-weight: 500; }
+    .radio-cell {
+      width: 72px;
+      text-align: center;
+    }
+    .error {
+      color: var(--danger);
+      font-weight: 700;
+      margin-top: 8px;
+      display: none;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    button {
+      border: 0;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+    }
+    button.secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+    .results {
+      display: none;
+    }
+    .score-grid, .summary-grid, .deep-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 18px;
+    }
+    .score-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .chart {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      height: 220px;
+      margin-top: 20px;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 10px;
+    }
+    .bar-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      width: 60px;
+    }
+    .bar-stack {
+      display: flex;
+      gap: 6px;
+      align-items: flex-end;
+      height: 180px;
+    }
+    .bar {
+      width: 18px;
+      display: block;
+      border-radius: 4px 4px 0 0;
+      position: relative;
+    }
+    .bar-value {
+      position: absolute;
+      top: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #374151;
+      white-space: nowrap;
+    }
+    .bar.adapted.D { background: rgba(220,38,38,0.4); }
+    .bar.adapted.I { background: rgba(234,179,8,0.4); }
+    .bar.adapted.S { background: rgba(22,163,74,0.4); }
+    .bar.adapted.C { background: rgba(37,99,235,0.4); }
+    .bar.natural.D { background: #dc2626; }
+    .bar.natural.I { background: #eab308; }
+    .bar.natural.S { background: #16a34a; }
+    .bar.natural.C { background: #2563eb; }
+    .chart-legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legend-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .legend-swatch.adapted { background: rgba(107,114,128,0.25); }
+    .legend-swatch.natural { background: rgba(17,24,39,0.9); }
+    .disc-explainer {
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--soft);
+      font-size: 0.93rem;
+    }
+    .disc-explainer p:last-child { margin-bottom: 0; }
+    .bar-label-x {
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .pill {
+      display: inline-block;
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin: 4px 6px 0 0;
+    }
+    .style-chip {
+      display: inline-block;
+      color: #111827;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin: 4px 6px 0 0;
+      border: 1px solid var(--border);
+      background: var(--soft);
+    }
+    .style-chip.D { background: rgba(220,38,38,0.12); border-color: rgba(220,38,38,0.35); }
+    .style-chip.I { background: rgba(234,179,8,0.18); border-color: rgba(234,179,8,0.45); }
+    .style-chip.S { background: rgba(22,163,74,0.12); border-color: rgba(22,163,74,0.35); }
+    .style-chip.C { background: rgba(37,99,235,0.12); border-color: rgba(37,99,235,0.35); }
+    ul.tight {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+    .footnote {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+    .pdf-note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    @media (max-width: 800px) {
+      .setting-row, .score-grid, .summary-grid, .deep-grid {
+        grid-template-columns: 1fr;
+      }
+      th:nth-child(2), th:nth-child(3), td:nth-child(2), td:nth-child(3) {
+        width: 64px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card instructions">
+      <h1>DISC Behavioral Styles Profile</h1>
+      <p class="muted">Self-scored assessment for website use. Responses stay in the browser unless you add your own form handling or storage.</p>
+      <ol>
+        <li>Choose the setting in which your responses will be made: work, home, social, or another context.</li>
+        <li>In each box, select the phrase that is <strong>most</strong> descriptive of you in that setting.</li>
+        <li>In each box, select the phrase that is <strong>least</strong> descriptive of you in that setting.</li>
+        <li>Choose only one <strong>Most</strong> and one <strong>Least</strong> response per box.</li>
+        <li>Try to complete the assessment in about seven minutes.</li>
+      </ol>
+      <div class="setting-row">
+        <div>
+          <label for="userName">Your Name</label>
+          <input id="userName" type="text" placeholder="Enter your name">
+        </div>
+        <div>
+          <label for="contextSelect">Context</label>
+          <select id="contextSelect">
+            <option value="Work">Work</option>
+            <option value="Home">Home</option>
+            <option value="Social">Social</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label for="contextOther">If other, specify</label>
+          <input id="contextOther" type="text" placeholder="Optional">
+        </div>
+      </div>
+    </div>
+
+    <div id="assessment"></div>
+
+    <div class="card">
+      <div class="actions">
+        <button id="scoreBtn" type="button">Calculate Results</button>
+        <button id="pdfBtn" type="button">Download PDF Report</button>
+        <button id="resetBtn" type="button" class="secondary">Reset</button>
+      </div>
+      <p class="pdf-note">Generate the results first, then download a PDF report. On Netlify, this should work normally.</p>
+      <p id="globalError" class="error" aria-live="polite"></p>
+    </div>
+
+    <div id="results" class="card results">
+      <h2 id="resultsTitle">Your DISC Results</h2>
+      <p><strong>Context:</strong> <span id="contextOutput"></span></p>
+
+      <div class="score-grid">
+        <div class="score-card">
+          <h3>Combined Chart: Adapted Style and Natural Style</h3>
+          <div id="combinedChart"></div>
+          <div class="chart-legend">
+            <span class="legend-item"><span class="legend-swatch adapted"></span>Adapted style</span>
+            <span class="legend-item"><span class="legend-swatch natural"></span>Natural style</span>
+          </div>
+          <div class="disc-explainer">
+            <p><strong>How to read the chart:</strong> for each DISC letter, the lighter bar shows your adapted style and the darker bar shows your natural style. Taller bars indicate stronger expression of that dimension.</p>
+            <p><strong>D</strong> = Dominance, <strong>I</strong> = Influence, <strong>S</strong> = Steadiness, <strong>C</strong> = Conscientiousness.</p>
+          </div>
+        </div>
+        <div class="score-card">
+          <h3>Primary Style Summary</h3>
+          <p><strong>Adapted style:</strong> <span id="adaptedPrimary"></span></p>
+          <p><strong>Natural style:</strong> <span id="naturalPrimary"></span></p>
+          <div id="blendOutput"></div>
+        </div>
+      </div>
+
+      <div class="summary-grid">
+        <div class="score-card">
+          <h3>Summary</h3>
+          <div id="plainSummary"></div>
+        </div>
+        <div class="score-card">
+          <h3>Interpretation</h3>
+          <div id="interpretation"></div>
+        </div>
+      </div>
+
+      <div class="summary-grid">
+        <div class="score-card">
+          <h3>General Characteristics</h3>
+          <div id="generalCharacteristics"></div>
+        </div>
+        <div class="score-card">
+          <h3>Strengths</h3>
+          <div id="strengths"></div>
+        </div>
+      </div>
+
+      <div class="deep-grid">
+        <div class="score-card">
+          <h3>Limitations</h3>
+          <div id="limitations"></div>
+        </div>
+        <div class="score-card">
+          <h3>Areas for Growth</h3>
+          <div id="growth"></div>
+        </div>
+      </div>
+
+      <div class="deep-grid">
+        <div class="score-card">
+          <h3>Value to the Team</h3>
+          <div id="valueToTeam"></div>
+        </div>
+        <div class="score-card">
+          <h3>How the Team Can Best Approach This Person</h3>
+          <div id="teamApproach"></div>
+        </div>
+      </div>
+
+      <div class="summary-grid">
+        <div class="score-card">
+          <h3>Best Fit</h3>
+          <div id="bestFit"></div>
+        </div>
+      </div>
+
+      <p class="footnote">
+  This assessment is for self-reflection and discussion. It is not a clinical instrument and should not be used as a selection or diagnostic tool.
+  <br><br>
+  DISC assessment provided by <strong>crisbravo.com</strong>
+</p>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    var questions = [
+      [
+        { text: 'Trusting, Enthusiastic', value: 2 },
+        { text: 'Tolerant, Respectful', value: 4 },
+        { text: 'Courageous, Adventurous', value: 5 },
+        { text: 'Agreeable, Accommodating', value: 3 }
+      ],
+      [
+        { text: 'Affectionate, Tender', value: 2 },
+        { text: 'Simple, Compliant', value: 5 },
+        { text: 'Determined, Wants results', value: 1 },
+        { text: 'Content, Gratified', value: 3 }
+      ],
+      [
+        { text: 'Innovative, Visionary', value: 1 },
+        { text: 'Reserved, Reticent', value: 4 },
+        { text: 'Sociable, Congenial', value: 5 },
+        { text: 'Peacemaker, Negotiator', value: 3 }
+      ],
+      [
+        { text: 'Unafraid, Independent', value: 1 },
+        { text: 'Reserved, Cautious restraint', value: 4 },
+        { text: 'Carefree, Lacks caution', value: 2 },
+        { text: 'Kind, Cordial', value: 3 }
+      ],
+      [
+        { text: 'Precise, Accurate', value: 5 },
+        { text: 'Focused, Goal-oriented', value: 1 },
+        { text: 'Team player, Accommodating', value: 5 },
+        { text: 'Encourage others, Stimulating', value: 2 }
+      ],
+      [
+        { text: 'Conscientious, Plans for future', value: 4 },
+        { text: 'Recognition, Seeks advancement', value: 1 },
+        { text: 'Venturesome, Audacious', value: 2 },
+        { text: 'Dependable, Good listener', value: 3 }
+      ],
+      [
+        { text: 'Sensitive, Becomes frustrated', value: 4 },
+        { text: 'Stand up to opposition, right', value: 1 },
+        { text: 'Complacent, keeps feelings inside', value: 3 },
+        { text: 'Tell my side of the story, want to be heard', value: 5 }
+      ],
+      [
+        { text: 'Rules make it boring, Restless', value: 2 },
+        { text: 'Challenges the rules, Daring', value: 5 },
+        { text: 'Rules make it safe, Security', value: 3 },
+        { text: 'Rules make it fair, Justice', value: 4 }
+      ],
+      [
+        { text: 'Seeks balance, Calm', value: 3 },
+        { text: 'Talkative, Charismatic', value: 2 },
+        { text: 'Orderly, Follows the rules', value: 5 },
+        { text: 'Fast paced, High spirited', value: 1 }
+      ],
+      [
+        { text: 'Likes awards, Accomplishments', value: 1 },
+        { text: 'Enjoys social, Group gatherings', value: 2 },
+        { text: 'Continues education, Cultured', value: 5 },
+        { text: 'Wants to be safe, Unthreatened', value: 3 }
+      ],
+      [
+        { text: 'Systematic, Time management', value: 4 },
+        { text: 'Anxious, Hurried', value: 1 },
+        { text: 'Dependable, Persistent', value: 3 },
+        { text: 'Emotional, Impulsive', value: 2 }
+      ],
+      [
+        { text: 'Cautious, Calculating', value: 4 },
+        { text: 'Consistent, Thorough', value: 5 },
+        { text: 'Outgoing, Enthusiastic', value: 5 },
+        { text: 'Take charge, Direct approach', value: 1 }
+      ],
+      [
+        { text: 'Detached, Too careful', value: 5 },
+        { text: 'Unrealistic, Overcommitted', value: 2 },
+        { text: 'Complacent, Resist change', value: 3 },
+        { text: 'Blunt, Overbearing', value: 5 }
+      ],
+      [
+        { text: 'Excitable, Cheerful', value: 2 },
+        { text: 'Supporter, Advocate', value: 3 },
+        { text: 'Methodical, Exact', value: 5 },
+        { text: 'Competitive, Argumentative', value: 1 }
+      ],
+      [
+        { text: 'A good analyzer', value: 4 },
+        { text: 'A good listener', value: 3 },
+        { text: 'A good encourager', value: 2 },
+        { text: 'A good delegator', value: 1 }
+      ],
+      [
+        { text: 'I will get the facts', value: 4 },
+        { text: 'I will follow through', value: 3 },
+        { text: 'I will lead them', value: 1 },
+        { text: 'I will persuade them', value: 2 }
+      ],
+      [
+        { text: 'Forceful, Driven', value: 1 },
+        { text: 'Optimistic, Charismatic', value: 5 },
+        { text: 'Cooperative, Let\'s do it together', value: 5 },
+        { text: 'Accuracy counts, Precise', value: 4 }
+      ],
+      [
+        { text: 'Loyal, Reflective', value: 3 },
+        { text: 'Likes a challenge, Pioneering', value: 1 },
+        { text: 'Analytical, Tactful', value: 5 },
+        { text: 'Popular, Persuasive', value: 2 }
+      ],
+      [
+        { text: 'Will wait to buy, Patient', value: 3 },
+        { text: 'Will buy on impulse, Decisive', value: 1 },
+        { text: 'Will spend on what I want, selfish', value: 2 },
+        { text: 'Will do without, Self-controlled', value: 5 }
+      ],
+      [
+        { text: 'Agreeable, Approachable', value: 3 },
+        { text: 'Animated, Exuberant', value: 5 },
+        { text: 'Dauntless, Bold', value: 1 },
+        { text: 'Orderly, Adaptive', value: 4 }
+      ],
+      [
+        { text: 'Rigid, Wants things exact', value: 4 },
+        { text: 'Avoids monotony, Bored by routine', value: 5 },
+        { text: 'Seeks change, Goes for it', value: 1 },
+        { text: 'Congenial, Acts of kindness', value: 3 }
+      ],
+      [
+        { text: 'Authoritative, Influencer', value: 5 },
+        { text: 'Enjoys attention, New opportunities', value: 2 },
+        { text: 'Avoids conflict, Relaxed', value: 3 },
+        { text: 'Goes by the book, Diplomatic', value: 5 }
+      ],
+      [
+        { text: 'Impulsive, Emotional', value: 2 },
+        { text: 'Calculating, Overload w/details', value: 4 },
+        { text: 'Demanding, Domineering', value: 1 },
+        { text: 'Non-confrontational, Predictable', value: 5 }
+      ],
+      [
+        { text: 'Creative, Unique', value: 2 },
+        { text: 'Bottom line organizer, Results oriented', value: 1 },
+        { text: 'Trustworthy, Authentic', value: 5 },
+        { text: 'High standards, Looks to benchmarks', value: 4 }
+      ]
+    ];
+
+    var styles = {
+      D: {
+        name: 'D — Dominance',
+        brief: 'Active and task-oriented. Often direct, decisive, competitive, and focused on results.',
+        general: ['Determined','Driving','Ambitious','Pioneering','Strong-willed','Competitive','Decisive','Responsible','Skeptical','Logical','Independent'],
+        strengths: ['Bottom-line organizer','Places high value on time','Challenges the status quo','Innovative','Problem solver','Risk-taker','Self-starter; takes initiative','Makes quick, correct decisions'],
+        limitations: ['May overstep authority','Can be argumentative','Dislikes routine','Can seem self-absorbed','May struggle to admit being wrong','May be reluctant to delegate','Can be too bossy or insensitive'],
+        growth: ['Strive to be an active listener','Be attentive to other team members’ ideas until consensus is reached','Be less controlling and domineering','Develop greater appreciation for others’ opinions, feelings, and desires','Put more energy into personal relationships','Show support for other team members','Explain the why behind statements and proposals','Be friendlier and more approachable'],
+        value: ['Overcomes obstacles','Sees the big picture','Pushes the group ahead','Accepts challenges without fear','Maintains focus on goals','Gets results','Provides leadership','Handles several jobs at the same time'],
+        teamApproach: ['Support their goals and objectives','Keep the relationship businesslike','Argue facts, not personal feelings, when you disagree','Recognize their ideas','Provide alternative actions with brief supporting analyses','Be efficient, well-organized, and get to the point','Above all: be efficient and competent']
+      },
+      I: {
+        name: 'I — Influence',
+        brief: 'Active and people-oriented. Often expressive, persuasive, enthusiastic, and socially engaging.',
+        general: ['Sociable','Optimistic','Talkative','Polished','Enthusiastic','Persuasive','Warm','Poised','Trusting','Popular','Verbal'],
+        strengths: ['Creative problem solver','Great encourager','Motivates others to achieve','Positive sense of humor','Negotiates conflict; peacemaker','People person','Good salesperson','Great storytelling abilities'],
+        limitations: ['May care more about popularity than tangible results','Can be inattentive to detail','May have a short attention span','Can overuse gestures and facial expressions','May be too gullible or naive','Can be impulsive','May exaggerate'],
+        growth: ['Weigh pros and cons before making a decision','Be less impulsive','Be more results-oriented','Exercise control over actions, words, and emotions','Focus more on details and facts','Slow down your pace for other team members','Talk less and listen more','Evaluate others’ ideas carefully','Follow through with tasks'],
+        value: ['Speaks persuasively','Responds well to surprises','Expresses ideas clearly','Accepts new people easily','Creates enthusiasm','Works well with others','Brings humor','Keeps a positive attitude'],
+        teamApproach: ['Support their opinions, ideas, and dreams','Be enthusiastic, but do not hurry the discussion','Try not to argue','Agree on specifics of any agreement','Summarize in writing who, what, when, and where','Use testimonials and incentives to affect decisions','Above all: be interested in them']
+      },
+      S: {
+        name: 'S — Steadiness',
+        brief: 'Reserved and people-oriented. Often loyal, calm, patient, dependable, and relationship-focused.',
+        general: ['Conservative','Loyal','Cooperative','Predictable','Deliberate','Reflective','Patient','Possessive','Systematic','Resistant to change','Steady'],
+        strengths: ['Reliable and dependable','Loyal team worker','Respects authority','Good listener; patient and empathetic','Understanding and friendly','Team player','Good people skills','Balance'],
+        limitations: ['May give in rather than argue','May remember negatives and become suspicious','Can become easily depressed','May resist change','Sensitive to criticism and confrontation','Can struggle to set priorities','Can have difficulty making quick decisions','May sacrifice results for harmony'],
+        growth: ['Be more open to change','Be more direct in your interactions','Focus on overall goals of the team rather than specific procedures','Deal with confrontation constructively','Develop more flexibility','Increase pace to accomplish goals','Show more initiative','Express thoughts, opinions, and feelings more openly'],
+        value: ['Shows sincerity','Is even-tempered','Emphasizes loyalty','Builds relationships','Sees easier ways to do things','Provides dependability','Is a team player','Makes others feel accepted'],
+        teamApproach: ['Support their feelings by showing personal interest','Assume they may take things personally','Discuss personal feelings when you disagree','Be pleasant and allow time to build trust','Move along in an informal, slow manner','Assure them that actions involve minimal risk','Above all: be warm and sincere']
+      },
+      C: {
+        name: 'C — Conscientiousness',
+        brief: 'Reserved and task-oriented. Often careful, analytical, organized, systematic, and quality-focused.',
+        general: ['Conservative','Calculating','Low-keyed','Stable','Dependable','Cautious','Traditional','Neat','Systematic','Accurate','Tactful','Diplomatic'],
+        strengths: ['Anchor of reality','Conscientious and even-tempered','Thorough in activities','Defines situations','Gathers, analyzes, and tests information','Creative thinker','Ability to organize','Sets long-range goals'],
+        limitations: ['Needs clear boundaries','Can be bound by procedures and policies','May get bogged down in details','May prefer not to verbalize feelings','Can become overly cautious and conservative','May postpone decisions when risk is present'],
+        growth: ['Concentrate on doing the right things, not just doing things right','Be less critical of others’ ideas and methods','Respond more quickly to accomplish team goals','Build stronger relationships with other team members','Be more decisive','Focus less on facts and more on people','Take risks along with other team members'],
+        value: ['Works systematically','Is conscientious','Maintains focus','Analyzes obstacles','Strives for logical results','Organizes material','Thinks logically','Evaluates situations'],
+        teamApproach: ['Support their organized, thoughtful approach','Demonstrate with actions rather than words','Be precise, systematic, exact, and organized','List advantages and disadvantages of any plan','Provide solid, factual evidence','Provide guarantees that actions cannot backfire','Above all: be thorough and well-prepared']
+      }
+    };
+
+    function buildAssessment() {
+      var wrapper = document.getElementById('assessment');
+      wrapper.innerHTML = '';
+
+      for (var qIndex = 0; qIndex < questions.length; qIndex++) {
+        var items = questions[qIndex];
+        var block = document.createElement('div');
+        block.className = 'card question';
+
+        var rows = '';
+        for (var optIndex = 0; optIndex < items.length; optIndex++) {
+          var item = items[optIndex];
+          rows += '<tr>' +
+            '<td class="option-text">' + escapeHtml(item.text) + '</td>' +
+            '<td class="radio-cell"><input type="radio" name="most_' + qIndex + '" value="' + item.value + '" data-option="' + optIndex + '" aria-label="Most for question ' + (qIndex + 1) + ', option ' + (optIndex + 1) + '"></td>' +
+            '<td class="radio-cell"><input type="radio" name="least_' + qIndex + '" value="' + item.value + '" data-option="' + optIndex + '" aria-label="Least for question ' + (qIndex + 1) + ', option ' + (optIndex + 1) + '"></td>' +
+          '</tr>';
+        }
+
+        block.innerHTML = '' +
+          '<div class="question-head">' +
+            '<p class="question-title">Box ' + (qIndex + 1) + '</p>' +
+            '<span class="question-status" id="status_' + qIndex + '">Choose 1 Most and 1 Least</span>' +
+          '</div>' +
+          '<table>' +
+            '<thead>' +
+              '<tr>' +
+                '<th>Phrase</th>' +
+                '<th>Most</th>' +
+                '<th>Least</th>' +
+              '</tr>' +
+            '</thead>' +
+            '<tbody>' + rows + '</tbody>' +
+          '</table>' +
+          '<p class="error" id="error_' + qIndex + '">Select one Most and one Least. They cannot be the same phrase.</p>';
+
+        wrapper.appendChild(block);
+      }
+
+      var radios = document.querySelectorAll('input[type="radio"]');
+      for (var i = 0; i < radios.length; i++) {
+        radios[i].addEventListener('change', updateStatuses);
+      }
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function updateStatuses() {
+      for (var qIndex = 0; qIndex < questions.length; qIndex++) {
+        var most = document.querySelector('input[name="most_' + qIndex + '"]:checked');
+        var least = document.querySelector('input[name="least_' + qIndex + '"]:checked');
+        var status = document.getElementById('status_' + qIndex);
+        var error = document.getElementById('error_' + qIndex);
+
+        error.style.display = 'none';
+
+        if (most && least) {
+          status.textContent = 'Complete';
+        } else if (most || least) {
+          status.textContent = 'Partially complete';
+        } else {
+          status.textContent = 'Choose 1 Most and 1 Least';
+        }
+      }
+    }
+
+    function scoreAssessment() {
+      var globalError = document.getElementById('globalError');
+      globalError.style.display = 'none';
+      globalError.textContent = '';
+
+      var mostCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+      var leastCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+      var valid = true;
+
+      for (var qIndex = 0; qIndex < questions.length; qIndex++) {
+        var most = document.querySelector('input[name="most_' + qIndex + '"]:checked');
+        var least = document.querySelector('input[name="least_' + qIndex + '"]:checked');
+        var error = document.getElementById('error_' + qIndex);
+
+        error.style.display = 'none';
+
+        if (!most || !least) {
+          valid = false;
+          error.style.display = 'block';
+          continue;
+        }
+
+        var mostValue = Number(most.value);
+        var leastValue = Number(least.value);
+        var mostOption = Number(most.getAttribute('data-option'));
+        var leastOption = Number(least.getAttribute('data-option'));
+
+        if (mostOption === leastOption) {
+          valid = false;
+          error.style.display = 'block';
+          continue;
+        }
+
+        mostCounts[mostValue] += 1;
+        leastCounts[leastValue] += 1;
+      }
+
+      if (!valid) {
+        globalError.textContent = 'Complete each box with one Most and one Least response. Do not choose the same phrase in both columns.';
+        globalError.style.display = 'block';
+        document.getElementById('results').style.display = 'none';
+        return false;
+      }
+
+      var adapted = {
+        D: mostCounts[1],
+        I: mostCounts[2],
+        S: mostCounts[3],
+        C: mostCounts[4]
+      };
+
+      var natural = {
+        D: leastCounts[1],
+        I: leastCounts[2],
+        S: leastCounts[3],
+        C: leastCounts[4]
+      };
+
+      renderResults(adapted, natural);
+      return true;
+    }
+
+    function primaryStyle(scores) {
+      var topKey = 'D';
+      var topVal = scores.D;
+      var order = ['D', 'I', 'S', 'C'];
+      for (var i = 1; i < order.length; i++) {
+        if (scores[order[i]] > topVal) {
+          topKey = order[i];
+          topVal = scores[order[i]];
+        }
+      }
+      return topKey;
+    }
+
+    function secondaryStyle(scores, primary) {
+      var order = ['D', 'I', 'S', 'C'];
+      var second = primary;
+      var secondVal = -1;
+      for (var i = 0; i < order.length; i++) {
+        var letter = order[i];
+        if (letter !== primary && scores[letter] > secondVal) {
+          second = letter;
+          secondVal = scores[letter];
+        }
+      }
+      return second;
+    }
+
+    function styleBlend(scores) {
+      var arr = [
+        ['D', scores.D],
+        ['I', scores.I],
+        ['S', scores.S],
+        ['C', scores.C]
+      ];
+      arr.sort(function(a, b) { return b[1] - a[1]; });
+      if ((arr[0][1] - arr[1][1]) <= 1) {
+        return arr[0][0] + '/' + arr[1][0];
+      }
+      return arr[0][0];
+    }
+
+    function renderCombinedChart(adapted, natural) {
+      var container = document.getElementById('combinedChart');
+      container.innerHTML = '';
+
+      var max = Math.max(
+        adapted.D, adapted.I, adapted.S, adapted.C,
+        natural.D, natural.I, natural.S, natural.C,
+        1
+      );
+
+      var letters = ['D','I','S','C'];
+      var chart = document.createElement('div');
+      chart.className = 'chart';
+
+      for (var i = 0; i < letters.length; i++) {
+        var l = letters[i];
+        var group = document.createElement('div');
+        group.className = 'bar-group';
+
+        var stack = document.createElement('div');
+        stack.className = 'bar-stack';
+
+        var adaptedHeight = (adapted[l] / max) * 180;
+        var naturalHeight = (natural[l] / max) * 180;
+
+        var barAdapted = document.createElement('div');
+        barAdapted.className = 'bar adapted ' + l;
+        barAdapted.style.height = adaptedHeight + 'px';
+        barAdapted.title = 'Adapted ' + l + ': ' + adapted[l];
+        var adaptedValue = document.createElement('span');
+        adaptedValue.className = 'bar-value';
+        adaptedValue.textContent = adapted[l];
+        barAdapted.appendChild(adaptedValue);
+
+        var barNatural = document.createElement('div');
+        barNatural.className = 'bar natural ' + l;
+        barNatural.style.height = naturalHeight + 'px';
+        barNatural.title = 'Natural ' + l + ': ' + natural[l];
+        var naturalValue = document.createElement('span');
+        naturalValue.className = 'bar-value';
+        naturalValue.textContent = natural[l];
+        barNatural.appendChild(naturalValue);
+
+        stack.appendChild(barAdapted);
+        stack.appendChild(barNatural);
+
+        var label = document.createElement('div');
+        label.className = 'bar-label-x';
+        label.textContent = l;
+
+        group.appendChild(stack);
+        group.appendChild(label);
+        chart.appendChild(group);
+      }
+
+      container.appendChild(chart);
+    }
+
+    function renderBulletList(items) {
+      var html = '<ul class="tight">';
+      for (var i = 0; i < items.length; i++) {
+        html += '<li>' + escapeHtml(items[i]) + '</li>';
+      }
+      html += '</ul>';
+      return html;
+    }
+
+    function renderStyleChips(items, styleLetter) {
+      var html = '';
+      for (var i = 0; i < items.length; i++) {
+        html += '<span class="style-chip ' + styleLetter + '">' + escapeHtml(items[i]) + '</span>';
+      }
+      return html;
+    }
+
+    function buildPlainSummary(naturalPrimary, naturalSecondary, adaptedPrimary) {
+      var summary = '';
+      summary += '<p>Your <strong>natural style</strong> is primarily <strong>' + escapeHtml(styles[naturalPrimary].name) + '</strong>.</p>';
+      summary += '<p>This suggests that, spontaneously, you tend to show traits such as: ' + escapeHtml(styles[naturalPrimary].general.slice(0, 5).join(', ')) + '.</p>';
+      summary += '<p>Your second strongest pattern is <strong>' + escapeHtml(styles[naturalSecondary].name) + '</strong>, so your style is not one-dimensional.</p>';
+      summary += '<p>Your <strong>adapted style</strong> is primarily <strong>' + escapeHtml(styles[adaptedPrimary].name) + '</strong>, which suggests how you may be adjusting to what the current environment seems to require from you.</p>';
+      return summary;
+    }
+
+    function buildBestFit(primary) {
+      if (primary === 'D') {
+        return '<p>You tend to add the most value when the team needs speed, direction, firm decision-making, and momentum.</p>';
+      }
+      if (primary === 'I') {
+        return '<p>You tend to add the most value when the team needs energy, persuasion, optimism, and visible connection with other people.</p>';
+      }
+      if (primary === 'S') {
+        return '<p>You tend to add the most value when the team needs reliability, support, patience, loyalty, and stability in relationships.</p>';
+      }
+      return '<p>You tend to add the most value when the team needs structure, analysis, quality control, careful judgment, and logical consistency.</p>';
+    }
+
+    function renderResults(adapted, natural) {
+      var name = document.getElementById('userName').value.trim();
+      var title = document.getElementById('resultsTitle');
+      if (name) {
+        title.textContent = name + ', here are your DISC results';
+      } else {
+        title.textContent = 'Your DISC Results';
+      }
+      var results = document.getElementById('results');
+      results.style.display = 'block';
+
+      var contextSelect = document.getElementById('contextSelect').value;
+      var contextOther = document.getElementById('contextOther').value.replace(/^\s+|\s+$/g, '');
+      var context = (contextSelect === 'Other' && contextOther) ? contextOther : contextSelect;
+      document.getElementById('contextOutput').textContent = context;
+
+      renderCombinedChart(adapted, natural);
+
+      var adaptedPrimary = primaryStyle(adapted);
+      var naturalPrimary = primaryStyle(natural);
+      var naturalSecondary = secondaryStyle(natural, naturalPrimary);
+      var adaptedBlend = styleBlend(adapted);
+      var naturalBlend = styleBlend(natural);
+
+      document.getElementById('adaptedPrimary').textContent = styles[adaptedPrimary].name;
+      document.getElementById('naturalPrimary').textContent = styles[naturalPrimary].name;
+
+      document.getElementById('blendOutput').innerHTML = '' +
+        '<p><strong>Adapted blend:</strong> <span class="pill">' + escapeHtml(adaptedBlend) + '</span></p>' +
+        '<p><strong>Natural blend:</strong> <span class="pill">' + escapeHtml(naturalBlend) + '</span></p>';
+
+      document.getElementById('plainSummary').innerHTML = buildPlainSummary(naturalPrimary, naturalSecondary, adaptedPrimary);
+
+      document.getElementById('interpretation').innerHTML = '' +
+        '<p><strong>' + escapeHtml(styles[naturalPrimary].name) + '</strong></p>' +
+        '<p>' + escapeHtml(styles[naturalPrimary].brief) + '</p>' +
+        '<p><strong>How to read the two styles:</strong> adapted style reflects how you may be responding to current expectations in the environment, while natural style reflects your more spontaneous way of being.</p>';
+
+      document.getElementById('generalCharacteristics').innerHTML = '' +
+        '<p><strong>' + escapeHtml(styles[naturalPrimary].name) + '</strong></p>' +
+        '<div>' + renderStyleChips(styles[naturalPrimary].general, naturalPrimary) + '</div>';
+
+      document.getElementById('strengths').innerHTML = '<p><strong>' + escapeHtml(styles[naturalPrimary].name) + '</strong></p>' + renderBulletList(styles[naturalPrimary].strengths);
+      document.getElementById('limitations').innerHTML = '<p><strong>' + escapeHtml(styles[naturalPrimary].name) + '</strong></p>' + renderBulletList(styles[naturalPrimary].limitations);
+      document.getElementById('growth').innerHTML = '<p><strong>' + escapeHtml(styles[naturalPrimary].name) + '</strong></p>' + renderBulletList(styles[naturalPrimary].growth);
+      document.getElementById('valueToTeam').innerHTML = '<p><strong>' + escapeHtml(styles[naturalPrimary].name) + '</strong></p>' + renderBulletList(styles[naturalPrimary].value);
+      document.getElementById('teamApproach').innerHTML = '<p><strong>' + escapeHtml(styles[naturalPrimary].name) + '</strong></p>' + renderBulletList(styles[naturalPrimary].teamApproach);
+      document.getElementById('bestFit').innerHTML = buildBestFit(naturalPrimary);
+
+      if (results.scrollIntoView) {
+        results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function resetAssessment() {
+      var radios = document.querySelectorAll('input[type="radio"]');
+      for (var i = 0; i < radios.length; i++) {
+        radios[i].checked = false;
+      }
+      document.getElementById('contextSelect').value = 'Work';
+      document.getElementById('contextOther').value = '';
+      document.getElementById('results').style.display = 'none';
+      document.getElementById('globalError').style.display = 'none';
+      updateStatuses();
+      window.scrollTo(0, 0);
+    }
+
+    function waitForChartRender(callback, attempts) {
+      attempts = attempts || 0;
+      var bars = document.querySelectorAll('#combinedChart .bar');
+      if (bars.length > 0 || attempts > 10) {
+        callback();
+        return;
+      }
+      setTimeout(function() {
+        waitForChartRender(callback, attempts + 1);
+      }, 120);
+    }
+
+    function downloadPDF() {
+      if (typeof html2canvas === 'undefined' || !window.jspdf || !window.jspdf.jsPDF) {
+        alert('PDF libraries did not load. Check your internet connection or CDN access.');
+        return;
+      }
+
+      var ok = scoreAssessment();
+      if (!ok) {
+        return;
+      }
+
+      var results = document.getElementById('results');
+      var originalShadow = results.style.boxShadow;
+      var originalBorder = results.style.border;
+      var originalBg = results.style.background;
+
+      results.style.boxShadow = 'none';
+      results.style.border = '0';
+      results.style.background = '#ffffff';
+
+      waitForChartRender(function() {
+        html2canvas(results, {
+          scale: 2,
+          backgroundColor: '#ffffff',
+          useCORS: true,
+          logging: false,
+          scrollY: -window.scrollY,
+          windowWidth: document.documentElement.scrollWidth
+        }).then(function(canvas) {
+          results.style.boxShadow = originalShadow;
+          results.style.border = originalBorder;
+          results.style.background = originalBg;
+
+          var imgData = canvas.toDataURL('image/png');
+          var pdf = new window.jspdf.jsPDF('p', 'mm', 'a4');
+          var pageWidth = pdf.internal.pageSize.getWidth();
+          var pageHeight = pdf.internal.pageSize.getHeight();
+          var margin = 10;
+          var imgWidth = pageWidth - (margin * 2);
+          var imgHeight = canvas.height * imgWidth / canvas.width;
+          var heightLeft = imgHeight;
+          var position = margin;
+
+          pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+          heightLeft -= (pageHeight - (margin * 2));
+
+          while (heightLeft > 0) {
+            position = heightLeft - imgHeight + margin;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+            heightLeft -= (pageHeight - (margin * 2));
+          }
+
+          pdf.save('disc-report.pdf');
+        }).catch(function(err) {
+          results.style.boxShadow = originalShadow;
+          results.style.border = originalBorder;
+          results.style.background = originalBg;
+          console.error(err);
+          alert('The PDF could not be generated.');
+        });
+      });
+    }
+
+    buildAssessment();
+    updateStatuses();
+    document.getElementById('scoreBtn').addEventListener('click', scoreAssessment);
+    document.getElementById('pdfBtn').addEventListener('click', downloadPDF);
+    document.getElementById('resetBtn').addEventListener('click', resetAssessment);
+  </script>
+</body>
+</html>
